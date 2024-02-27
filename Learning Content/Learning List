@@ -1,2 +1,7 @@
-1. Proxy and reverse Proxy
+1. Proxy and reverse Proxy ✅
 2. TLS HandShake
+3. Redis
+    - Rate Limiter
+    - Message Queue
+    - Store api responses
+    - 
