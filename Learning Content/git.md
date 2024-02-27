@@ -15,30 +15,32 @@ ssh -T git@github.com - Test your connection
 ---
 
 ### Check diff between last 2 commits
-
+```
 git diff HEAD^ HEAD
-
+```
 ---
 
 ### Apply patch file
+```
 git apply <file.patch>
-
+```
 ---
 
 ### Revert the applied patch
+```
 git apply -R <file.patch>
-
+```
 ---
 
 ### Divergent branches
-
+```
 git fetch --all
 git reset --hard origin/<branch-name>
-
+```
 ---
 
 ### Create a patch file
-
+```
 git format-patch -1 HEAD - Patch of last one commit
-
+```
 ---
