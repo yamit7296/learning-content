@@ -1,16 +1,25 @@
 ## Setup SSH
 
-ls -al ~/.ssh - Check existing SSH key
-
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com" - Generate new ssh key 
-
-eval "$(ssh-agent -s)" - Add ssh private key to agent
-
-ssh-add ~/.ssh/<identiry-file>
-
-cat ~/.ssh/id_rsa.pub - see the ssh key and copy to github ssh 
-
-ssh -T git@github.com - Test your connection
+- Check existing SSH key
+```
+ls -al ~/.ssh
+```
+- Generate new ssh key 
+```
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" 
+```
+- Add ssh private key to agent
+```
+eval "$(ssh-agent -s)" && ssh-add ~/.ssh/<identiry-file>
+```
+- see the ssh key and copy to github ssh 
+```
+cat ~/.ssh/<identiry-public-file>
+```
+- Test your connection
+```
+ssh -T git@github.com
+```
 
 ---
 
