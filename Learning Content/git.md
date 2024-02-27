@@ -41,6 +41,6 @@ git reset --hard origin/<branch-name>
 
 ### Create a patch file
 ```
-git format-patch -1 HEAD - Patch of last one commit
+git format-patch -<last-n-commit> HEAD
 ```
 ---
