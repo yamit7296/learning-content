@@ -53,3 +53,15 @@ git reset --hard origin/<branch-name>
 git format-patch -<last-n-commit> HEAD
 ```
 ---
+
+
+### Create new PR from old commit
+
+1. git checkout main && git pull
+2. git log --oneline - will see all the commit
+3. git checkout -b feature-branch <commit-hash>   // Commit hash from which you started doing changes
+4. git rebase main
+5. git checkout main
+6. git reset --hard <initial-commit-hash>
+
+Push both branch and create pull request and share with me
