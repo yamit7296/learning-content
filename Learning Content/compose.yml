@@ -1,0 +1,248 @@
+version: '3.8'
+
+services:
+  node:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-node
+      target: dependencies
+    env_file:
+      - .env
+    image: ${PROJECT_NAME}-node
+    container_name: ${PROJECT_NAME}-node-${NODE_ENV}
+    command: dumb-init node ace serve --watch
+    environment:
+      WAIT_HOSTS: ${PROJECT_NAME}-postgres-${NODE_ENV}:5432
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - ./.data/seed-data:/app/.data/seed-data
+      - ./.data/customer-data-reset-logs.json:/app/.data/customer-data-reset-logs.json
+      - ./.data/data-reset-auth.json:/app/.data/data-reset-auth.json
+      - ./.data/email-allowlist.json:/app/.data/email-allowlist.json
+      - ./.data/mobile-allowlist.json:/app/.data/mobile-allowlist.json
+      - /app/.data
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    depends_on:
+      - postgres
+      - redis
+      - kafka-broker
+    networks:
+      - credilio-services
+
+  admin-report-consumer:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-node
+      target: dependencies
+    env_file:
+      - .env
+    image: ${PROJECT_NAME}-node
+    container_name: ${PROJECT_NAME}-admin-report-consumer-${NODE_ENV}
+    command: dumb-init npm run start-admin-report-consumer:dev
+    environment:
+      WAIT_HOSTS: ${PROJECT_NAME}-postgres-${NODE_ENV}:5432
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - ./.data/customer-data-reset-logs.json:/app/.data/customer-data-reset-logs.json
+      - ./.data/data-reset-auth.json:/app/.data/data-reset-auth.json
+      - ./.data/email-allowlist.json:/app/.data/email-allowlist.json
+      - ./.data/mobile-allowlist.json:/app/.data/mobile-allowlist.json
+      - /app/.data
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    depends_on:
+      - postgres
+      - redis
+      - kafka-broker
+    networks:
+      - credilio-services
+
+  consumer:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-node
+      target: dependencies
+    env_file:
+      - .env
+    image: ${PROJECT_NAME}-node
+    container_name: ${PROJECT_NAME}-consumer-${NODE_ENV}
+    command: dumb-init npm run start-consumer:dev
+    environment:
+      WAIT_HOSTS: ${PROJECT_NAME}-postgres-${NODE_ENV}:5432
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - ./.data/customer-data-reset-logs.json:/app/.data/customer-data-reset-logs.json
+      - ./.data/data-reset-auth.json:/app/.data/data-reset-auth.json
+      - ./.data/email-allowlist.json:/app/.data/email-allowlist.json
+      - ./.data/mobile-allowlist.json:/app/.data/mobile-allowlist.json
+      - /app/.data
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    depends_on:
+      - postgres
+      - redis
+      - kafka-broker
+    networks:
+      - credilio-services
+
+  postgres:
+    image: postgres:14.2-alpine
+    container_name: ${PROJECT_NAME}-postgres-${NODE_ENV}
+    environment:
+      TZ: UTC
+      PGTZ: UTC
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.data/postgres:/var/lib/postgresql/data:delegated
+      - ./postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c max_connections=200 -c 'hba_file=/etc/postgresql/pg_hba.conf'
+    restart: always
+    networks:
+      - credilio-services
+
+  redis:
+    image: redis:6.2.6-alpine
+    container_name: ${PROJECT_NAME}-redis-${NODE_ENV}
+    ports:
+      - 6379:6379
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    networks:
+      - credilio-services
+
+  elastic-search:
+    image: elasticsearch:8.13.0
+    container_name: ${PROJECT_NAME}-elastic-search-${NODE_ENV}
+    ports:
+      - 9200:9200
+    restart: always
+    environment:
+      - node.name=elastic-search
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - xpack.security.enabled=${ELASTIC_SECURITY}
+      - xpack.security.enrollment.enabled=${ELASTIC_SECURITY}
+    volumes:
+     - ./.data/elastic-search:/usr/share/elasticsearch/data
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    networks:
+      - credilio-services
+  
+  kibana:
+    image: kibana:8.13.0
+    container_name: ${PROJECT_NAME}-kibana-${NODE_ENV}
+    ports:
+      - 5601:5601
+    restart: always
+    environment:
+      - node.name=kib8
+      - cluster.name=es-docker-cluster
+      - ELASTICSEARCH_HOST=http://elastic-search:9200
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    depends_on:
+      - elastic-search
+    networks:
+      - credilio-services
+
+  kafka-zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.0
+    container_name: ${PROJECT_NAME}-kafka-zookeeper-${NODE_ENV}
+    volumes:
+      - ./.data/zookeeper/data:/var/lib/zookeeper/data
+      - ./.data/zookeeper/log:/var/lib/zookeeper/log
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 60000
+    ports:
+      - 2181:2181
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    networks:
+      - credilio-services
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:7.3.0
+    container_name: ${PROJECT_NAME}-kafka-broker-${NODE_ENV}
+    ports:
+      - 9092:9092
+    depends_on:
+      - kafka-zookeeper
+    volumes:
+      - ./.data/kafka-broker:/var/lib/kafka/data
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: ${PROJECT_NAME}-kafka-zookeeper-${NODE_ENV}:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://${KAFKA_BROKER_LIST}
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    restart: always
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: 5
+    networks:
+      - credilio-services
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: ${PROJECT_NAME}-node-exporter-${NODE_ENV}
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - 9100:9100
+    restart: always
+    networks:
+      - credilio-services
+
+networks:
+  credilio-services:
+    name: credilio-services
