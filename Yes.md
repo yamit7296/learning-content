@@ -1,3 +1,27 @@
+PR : 
+
+- https://github.com/credilio/customer-api/pull/1082
+- https://github.com/credilio/customer-seed-data/pull/178
+
+Task:
+ - https://app.clickup.com/t/86cx5e40j (Part 1)
+ - https://app.clickup.com/t/86cxd0m5b (Part 2)
+
+
+Part 2 PRD
+
+ - https://cftpl-my.sharepoint.com/:w:/g/personal/prajyot_chakrawarti_credilio_in/ESTYIj9G6CFOqB9-AjRNnOQBue7po7LvSKwPn6HfuoIh4Q?e=4K41Ol
+
+API Document
+ - https://t3310960.p.clickup-attachments.com/t3310960/0305900a-1fe6-4c9d-89b3-0d23bcdc0deb/Credit%20Card%20API%20Specifications_Partner_12_09_24.pdf?view=open
+
+Query Sheet
+
+ - https://cftpl-my.sharepoint.com/:x:/r/personal/bhupen_patil_credilio_in/_layouts/15/Doc.aspx?sourcedoc=%7B13F758D4-690E-4E7D-A064-49A21360B10A%7D&file=yes_bank_card_mngmt_queries.xlsx&wdOrigin=TEAMS-MAGLEV.p2p_ns.rwc&action=default&mobileredirect=true
+
+Post Man collection
+
+ - https://bold-meadow-836012.postman.co/workspace/New-Team-Workspace~3b2b728a-c125-4787-a7fc-e318ac812b38/request/20655440-6df15833-a6dc-4f44-ae2c-ef709aabbdc9 (Need to update few things)
 
 End Point: customer/v1/clevertap/button-click
 Payload {
@@ -28,7 +52,7 @@ Mobile: 6029347689
 ARN: 2501151741046
 ProductCode: 'NP'
 
-Service > 20 Mins
+Token Service > 20 Mins
 Consent > 5 Mins
 
 

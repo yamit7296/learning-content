@@ -1,7 +1,0 @@
-7719068360 - SBI_011 - {"data": {"status": "failed", "message": "lastName - Space, numbers and special characters are not allowed"}}
-8171841027 - HDFC_023 - {"data": {"status": "failed", "message": "lastName - Space, numbers and special characters are not allowed"}}
-8171841027
-9526738808 - HDFC_023 - {"data": {"status": "failed", "message": "lastName - Space, numbers and special characters are not allowed"}}
-8668235929 - INDUSIND_003 - {"data": {"status": "failed", "message": "Kandhare's application for IndusInd Bank is already in progress. Please submit an application for another lender."}}
-9526738808 - HDFC_023 - {"data": {"status": "failed", "message": "lastName - Space, numbers and special characters are not allowed"}}
-8085970618 - INDUSIND_003 - {"data": {"status": "failed", "message": "lastName - Space, numbers and special characters are not allowed"}}
