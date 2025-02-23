@@ -65,3 +65,37 @@ git format-patch -<last-n-commit> HEAD
 6. git reset --hard <initial-commit-hash>
 
 Push both branch and create pull request and share with me
+
+
+### Set Remote URL
+
+```
+git remote set-url origin git@yamit7296.github.com:yamit7296/learning-content.git
+```
+
+
+### Git Sqaush
+- checkout main
+```
+git checkout yourBranch
+```
+- reset the changes 
+```
+git reset $(git merge-base main $(git rev-parse --abbrev-ref HEAD))
+```
+- commit the changes
+```
+git add -A && git commit -m "fix: sqaush commit"
+```
+
+### Delete Branch**
+
+- Delete remote
+```
+git push -d origin automate-KPI-report &&  git branch -d automate-KPI-report
+```
+
+- Delete local
+```
+git branch -d automate-KPI-report               
+```
