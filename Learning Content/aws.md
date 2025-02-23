@@ -65,6 +65,7 @@ S3 Access policy
 
 
 
+
 Query: 
 
 1. VPC - Not clear 
