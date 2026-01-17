@@ -1,2 +1,117 @@
-1. Proxy and reverse Proxy
+Interview Prep
+
+1. TypeScript
+2. Node Question
+3. Postgres
+4. LLD & HLD
+5. AWS
+
+
+AWS
+1. ECS,EC2,S3,Lambda,APIgateway,Cloudwatch.
+2. AWS with Child processes and clustering
+3. DynamoDb, Aws cognito
+
+1. EC2 (Elastic Compute Cloud)
+
+2. S3 (Simple Storage Service)
+
+
+3. RDS (Relational Database Service)
+
+ - High Availability
+ - Disaster Recovery
+ - AutoScaling
+ - Read Replica
+ - Storage Options
+ - Instance Type and Size
+ 
+4. Lambda
+
+It's a AWS service which provide serverless compute operations.
+Through Lambda you can do image processing, Database backup
+
+- Real time file processing
+- Database backup
+- IoT Application
+- API Backend
+
+5. API Gateway - 
+
+It's a front door/ entry point (Seats b/w front-end and backend services) which take request and routes to corerect services
+
+- It's also do Request Termination
+- Authentication
+- Rate Limiting
+- Caching
+- log
+- Some time also can be used as Load Balancer
+
+
+6. IAM (Identity and Access Management)
+7. Elastic Load Balancing (ELB)
+8. CloudWatch
+9. DynamoDB
+10. SNS (Simple Notification Service)
+11. SQS (Simple Queue Service)
+12. VPC (Virtual Private Cloud)
+13. CloudFront
+14. Route 53
+
+
+
+Basic Node Js
+
+1. Stream
+2. Socket IO
+
+
+Questions
+
+1. What is child process
+
+
+
+
+Framework
+1. Express
+
+
+
+1. Proxy and reverse Proxy ✅
 2. TLS HandShake
+3. Redis
+    - Rate Limiter
+    - Message Queue
+    - Store api responses
+    - 
+
+
+Follow for next 3 months
+
+
+1. 2 Hours for competetive programing
+2. 1.5 Hours learning concepts of competetive programing
+3. 2 Hours learning tools required by current software market by buidling projects
+4. 1 Hour GYM
+5. 30 mins work on my English Communication
+6. 7 Hours of Jobs
+7. 8 Hours of Sleep
+8. Building Project and publish
+
+
+
+
+
+RightReduce
+
+
+
+API Security
+
+1. Always use HTTPS
+2. Authorization and Authentication
+3. Rate Limiting
+4. IP Whitelisting
+5. Data validation and Error Handling
+6. Encryption and Decryption
